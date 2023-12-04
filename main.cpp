@@ -15,9 +15,9 @@ Timer t;                            // Timer to measure elapsed time of experime
 
 /************************Complete the code in this block**************************/
 // Assign digital/analog pins for control and sensing
-PwmOut     M1PWM(D10);              // Motor PWM output
+PwmOut     M1PWM(D9);              // Motor PWM output
 DigitalOut M1INA(D2);               // Motor forward enable
-DigitalOut M1INB(D3);               // Motor backward enable
+DigitalOut M1INB(D4);               // Motor backward enable
 AnalogIn   CS(A2);                  // Current sensor
 /*********************************************************************************/
 
