@@ -3,15 +3,11 @@
 #include "EthernetInterface.h"
 #include "ExperimentServer.h"
 #include "QEI.h"
-#include "MovingAverageFilter.h"
 
 // Define number of communication parameters with matlab
 #define NUM_INPUTS 2
 #define NUM_OUTPUTS 3
 
-// Create a MAF for velocity estimation 
-// MovingAverageFilter<DataType, WindowSize> MAF(InitValue);
-struct MovingAverageFilter<float, 1> MAF(0.0);
 
 Serial pc(USBTX, USBRX,115200);     // USB Serial Terminal for debugging
 ExperimentServer server;            // Object that lets us communicate with MATLAB
@@ -71,8 +67,8 @@ int main (void) {
                 // Read the current sensor value
                 float current = 36.7f * CS - 18.4f;
 /*********************************************************************************/
-                // Read angle from encoder, filter through MovingAverageFilter
-                float angle = MAF.update( (float)encoder.getPulses()*degPerTick );
+                // Read angle from encoder
+                float angle = (float)encoder.getPulses()*degPerTick;
                 
                 // Form output to send to MATLAB    
                 float output_data[NUM_OUTPUTS];
