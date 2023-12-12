@@ -48,6 +48,7 @@ int main (void) {
     
     while(1) {
         if (server.getParams(input_params,NUM_INPUTS)) {
+            // Unpack parameters from MATLAB
             float voltage = input_params[0]; // Applied voltage
             float ExpTime = input_params[1]; // Expriement time in second
         
