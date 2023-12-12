@@ -3,6 +3,7 @@
 #include "EthernetInterface.h"
 #include "ExperimentServer.h"
 #include "QEI.h"
+#define PI 3.14159265358979323846
 
 // Define number of communication parameters with matlab
 #define NUM_INPUTS 2
@@ -25,14 +26,12 @@ AnalogIn   CS(A2);                  // Current sensor
 // 64(counts/motor rev)*18.75(gear ratio) = 1200(counts/rev)
 // Pins A, B, no index, 1200 counts/rev, Quadrature encoding
 QEI encoder(D3,D5, NC, 1200 , QEI::X4_ENCODING); 
-const float degPerTick = 360.0/1200.0;
+const float radPerTick = -2.0*PI/1200.0;
 
 // Set motor duty [-1.0f, 1.0f]
 void setMotorDuty(float duty, DigitalOut &INA, DigitalOut &INB, PwmOut &PWM);
 
 const float SupplyVoltage = 12;     // Supply voltage in Volts
-// Precompute division to speed up in case compiler opt. is off
-const float SupplyVoltage_INV = 1/SupplyVoltage;
 void setMotorVoltage(float voltage, DigitalOut &INA, DigitalOut &INB, PwmOut &PWM);
 
 int main (void) {
@@ -69,7 +68,7 @@ int main (void) {
                 float current = 36.7f * CS - 18.4f;
 /*********************************************************************************/
                 // Read angle from encoder
-                float angle = (float)encoder.getPulses()*degPerTick;
+                float angle = (float)encoder.getPulses()*radPerTick;
                 
                 // Form output to send to MATLAB    
                 float output_data[NUM_OUTPUTS];
@@ -89,7 +88,7 @@ int main (void) {
 
 //Set motor voltage (nagetive means reverse)
 void setMotorVoltage(float voltage, DigitalOut &INA, DigitalOut &INB, PwmOut &PWM){
-    setMotorDuty(voltage * SupplyVoltage_INV, INA, INB, PWM);
+    setMotorDuty(voltage / SupplyVoltage, INA, INB, PWM);
 }
 
 // Set motor duty [-1.0f, 1.0f]

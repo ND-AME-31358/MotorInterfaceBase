@@ -8,6 +8,6 @@ mbed-os
 compile_commands.json
 .clangd
 .cache
-QEI_pmw
 ExperimentServer
 RunExperimentMatlab
+QEI_pmw
