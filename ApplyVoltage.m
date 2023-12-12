@@ -12,7 +12,7 @@ function output_data = ApplyVoltage(voltage)
     subplot(212)
     h2 = plot([0],[0]);
     h2.XData = []; h2.YData = [];
-    ylabel('Angle (deg)');
+    ylabel('Angle (rad)');
     
     % This function will get called any time there is new data from
     % the FRDM board. Data comes in blocks, rather than one at a time.
