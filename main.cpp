@@ -7,7 +7,7 @@
 
 // Define number of communication parameters with matlab
 #define NUM_INPUTS 2
-#define NUM_OUTPUTS 3
+#define NUM_OUTPUTS 5
 
 
 Serial pc(USBTX, USBRX,115200);     // USB Serial Terminal for debugging
@@ -66,16 +66,19 @@ int main (void) {
                 // Note: CS gives the analog reading in range [0.0, 1.0]
                 // Your result should obtain from the logic voltage and datasheet of the sensor
                 // Read the current sensor value
-                float current = 36.7f * CS - 18.4f;
+                float current = 36.7f * (CS - 0.5f);
 /*********************************************************************************/
                 // Read angle from encoder
                 float angle = (float)encoder.getPulses() * radPerTick;
+                float velocity = encoder.getVelocity()*radPerTick;
                 
                 // Form output to send to MATLAB    
                 float output_data[NUM_OUTPUTS];
-                output_data[0] = t.read();  // timestamp
-                output_data[1] = current;
-                output_data[2] = angle;
+                output_data[0] = t.read();
+                output_data[1] = angle;
+                output_data[2] = velocity;
+                output_data[3] = voltage;
+                output_data[4] = current;
                 // Send data to MATLAB
                 server.sendData(output_data,NUM_OUTPUTS);
                 wait(.001);                 // Sending data in 1kHz
