@@ -13,6 +13,7 @@
 Serial pc(USBTX, USBRX,115200);     // USB Serial Terminal for debugging
 ExperimentServer server;            // Object that lets us communicate with MATLAB
 Timer t;                            // Timer to measure elapsed time of experiment
+DigitalOut led_g(LED_GREEN,1);      // UDP server state indicator
 
 /************************Complete the code in this block**************************/
 // Assign digital/analog pins for control and sensing
@@ -39,6 +40,7 @@ int main (void) {
     // Link the terminal with our server and start it up
     server.attachTerminal(pc);
     server.init();
+    led_g = 0;  // UDP server is ready, turn on green led
 
     // PWM period should nominally be a multiple of our control loop
     M1PWM.period_us(50);
@@ -59,7 +61,7 @@ int main (void) {
             setMotorVoltage(0,M1INA,M1INB,M1PWM); //Turn off motor just in case
 
             // Run experiment until timeout
-            while( t.read() < ExpTime ) { 
+            while( t.read() < ExpTime ) {
                 setMotorVoltage(voltage,M1INA,M1INB,M1PWM);
 
 /************************Complete the computation of current sensing***************/
