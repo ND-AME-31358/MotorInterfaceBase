@@ -99,7 +99,7 @@ int main (void) {
                 float current  = 0.0f * CS; // Read the current sensor value
                 /* ===== End of code block =================== */
 
-                // Read angle from encoder
+                // Read angle and velocity from encoder
                 float angle    = (float)encoder.getPulses()   * radPerTick; // in rad
                 float velocity =        encoder.getVelocity() * radPerTick; // in rad/s
                 
