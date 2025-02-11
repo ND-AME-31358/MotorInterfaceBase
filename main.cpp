@@ -39,7 +39,7 @@ DigitalOut led_g(LED_GREEN,1);      // UDP server state indicator
 FastPWM    M1PWM(D*);               // Motor PWM output (we are using the "FastPWM" rather than built-in "PwmOut" for higher resolution)
 DigitalOut M1INA(D*);               // Motor forward enable
 DigitalOut M1INB(D*);               // Motor backward enable
-**********    CS(**);               // Current sensor
+MyAnalogIn CS(**);               // Current sensor
 /* ===== End of code block =================== */
 
 // Create a quadrature encoder
